@@ -2,7 +2,7 @@
 
 
 
-A complete guide on how to use the TSM-Rec tool is available in a Jupyter Notebook in **"TSM-Rec: The How to Guide"**
+A complete guide on how to use the TSM-Rec tool is available in a Jupyter Notebook file: **"TSM-Rec: The How to Guide"**
 
 The guide details the reconstruction pipeline used for the glioma test-case and for an additional example case.
 
