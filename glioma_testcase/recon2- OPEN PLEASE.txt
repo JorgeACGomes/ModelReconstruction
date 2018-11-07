@@ -1,0 +1,5 @@
+**Note**
+
+Due to GitHub restrictions the recon2 model used in the glioma test-case is available for download on the link below:
+
+https://utad-my.sharepoint.com/:t:/g/personal/al58543_utad_eu/ERib6nhvZv5Au9aKyjpvXbcBRyJXV3qB7KrKdN81boNecQ?e=cdK5xJ
