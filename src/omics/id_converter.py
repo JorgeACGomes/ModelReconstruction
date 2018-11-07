@@ -28,19 +28,19 @@ def _get_HGNC():
     # Download the file from `url` and save it locally under `hgnc_complete_set_[Date]`:
     now = date.today()
     url = "ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/hgnc_complete_set.txt"
-    path = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/hgnc_complete_set_" + str(now) + ".tsv"
+    path = "hgnc_complete_set_" + str(now) + ".tsv"
     file = Path(path)
 
     if file.is_file():  # if file has already been downloaded today skip this step
         return path
     else:
         try:
-            file = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/hgnc_complete_set_" + str(now) + ".tsv"
+            file = "hgnc_complete_set_" + str(now) + ".tsv"
             with urllib.request.urlopen(url) as response, open(file, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
 
         except urllib.error.URLError as e:
-            file = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/hgnc_complete_set_2018-09-12.tsv"
+            file = "hgnc_complete_set_2018-09-13.tsv"
 
             print('Please Check Internet Connection, using locally available HGNC file')
         return file
@@ -97,7 +97,7 @@ def searchNomenclature(ids):
 
     while not found:  # cross each id with every line till a match comes up
         test = ids.pop()
-        with open(file, 'r') as f:
+        with open(file, 'r', encoding='utf8') as f:
             for line in f.readlines():
                 if test in line.split('\t'):  # ensures an exact match
                     nomenclature_col = line.split('\t').index(test)

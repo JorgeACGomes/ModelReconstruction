@@ -1,6 +1,6 @@
 """
  Created by Jorge Gomes on 28/03/2018
- MReconstruction
+ TsmRec
  OmicsDataMap
  
 """
@@ -72,14 +72,14 @@ if __name__ == '__main__':
 
     now = time.time()
     # metabolic model
-    pickle_file_simplified = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/models/recon1_pickle_simplified"
+    pickle_file_simplified = "../../models/recon1_pickle_simplified"
     pickle_model = open(pickle_file_simplified, 'rb')
     model = pickle.load(pickle_model)
     print('Model loaded')
     print(time.time() - now)
 
     # reader
-    omics_file = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/pathology.tsv"
+    omics_file = "C:/Users/Tese_Avoid_Namespaces/Tese/TsmRec/files/pathology.tsv"
     d2num = {'High': 20.0,
              'Medium': 15.0,
              'Low': 10.0,

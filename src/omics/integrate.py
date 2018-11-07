@@ -1,6 +1,6 @@
 """
  Created by Jorge Gomes on 05/04/2018
- MReconstruction
+ TsmRec
  integrate
  
 """
@@ -16,14 +16,17 @@ from omics.id_converter import searchNomenclature
 # Nested function implementation to ease variable scoping
 
 
-def integrateOmics(metModel, omicsContainer, modelField='id'):
+def integrateOmics(CBModel, omicsContainer, modelField='id', and_func=min, or_func=max):
     """
     Function responsible for the integration of different omics data with a metabolic model loaded with framed package.
     Matches model ids for gene_ids, metabolites or reaction ids with those present in the omicsContainer object.
 
-    :param metModel: (obj) a metabolic model object previously loaded with framed package
+    :param CBModel: (obj) a metabolic model object previously loaded with framed package
     :param omicsContainer: (obj) an omics container object previously created using OmicsContainer class.
-    :param modelField: (str) the model field where ids shall be retrieved and used for the integration.
+    :param modelField: (str) the model field where ids shall be retrieved and used for the integration.(must be either
+                        "id" or "name")
+    :param and_func:(func) the mathematical function to replace the "AND" operator present in the Gene-Protein-Rules
+    :param or_func:(func) the mathematical function to replace the "OR" operator present in the Gene-Protein-Rules
 
 
     :return m: (obj) an OmicsDataMap object which contains the mapping between reactions/metabolites and its fluxes
@@ -41,7 +44,7 @@ def integrateOmics(metModel, omicsContainer, modelField='id'):
         genes = set()  # set of genes listed in every reaction gpr
 
         # Check each reaction in the model for its gene protein rule, to register which genes can be useful
-        for r_id, reaction in metModel.reactions.items():
+        for r_id, reaction in CBModel.reactions.items():
             if reaction.gpr is not None:
                 genes.update(reaction.gpr.get_genes())
 
@@ -62,7 +65,7 @@ def integrateOmics(metModel, omicsContainer, modelField='id'):
         Handles integration of both proteomics and transcriptomics expression data relying on framed's gene2reaction
         """
         suffixAndPrefix()
-        d = gene2reaction(metModel, omicsContainer.get_Data(), or_func=max)
+        d = gene2reaction(CBModel, omicsContainer.get_Data(), or_func=or_func, and_func=and_func)
         return aux_createMap(d, 'ReactionDataMap')
 
     def dIntegrate():
@@ -73,7 +76,7 @@ def integrateOmics(metModel, omicsContainer, modelField='id'):
         dataTypes = {'fluxomics': 'ReactionsDataMap',
                      'metabolomics': 'MetabolitesDataMap'}
         try:
-            target = dataTypes[omicsType.lower()].strip('DataMap').lower()  # which entity r we 4 looking in the model?
+            target = dataTypes[omicsType.lower()].replace('DataMap', '').lower()  # which entity r we 4 looking in the model?
         except KeyError:
             print('OmicsContainer object has an invalid omicsType')
             return
@@ -82,13 +85,13 @@ def integrateOmics(metModel, omicsContainer, modelField='id'):
 
         d = {}  # {entry:val for each entry both in model and omics container, and respective val in container}
 
-        for entry in getattr(metModel, target).values():  # accessing values from a dic of {'EntityID':EntityObject}'
+        for entry in getattr(CBModel, target).values():  # accessing values from a dic of {'EntityID':EntityObject}'
             if not skipVal:
                 try:
                     field = getattr(entry, modelField.lower())
                     skipVal = True
                 except AttributeError:
-                    print('User defined modelField is not present in the Metabolic Model. Must be "Id" or "Name"')
+                    print('User defined modelField is not present in the Metabolic Model. Must be "id" or "name"')
 
             else:
                 field = getattr(entry, modelField.lower())  # returns a string with an identifier ('Id' or 'Name')

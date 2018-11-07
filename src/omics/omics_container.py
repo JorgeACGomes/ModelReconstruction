@@ -283,7 +283,7 @@ class OmicsContainer:
 if __name__ == '__main__':
     from readers.hpa_reader import HpaReader
 
-    path = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/pathology.tsv"
+    path = "C:/Users/Tese_Avoid_Namespaces/Tese/TsmRec/files/pathology.tsv"
 
     d2num = {'High': 20.0,
              'Medium': 15.0,
