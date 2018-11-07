@@ -1,6 +1,6 @@
 """
  Created by Jorge Gomes on 01/08/2018
- MReconstruction
+ TsmRec
  reconstruction
  
 """
@@ -8,6 +8,7 @@ from framed import simplify
 from copy import deepcopy
 from optlang.cplex_interface import Variable, Constraint, Model, Objective
 from reconstruction.configuration import Configuration
+from framed import save_sbml_model
 
 
 class Reconstruction:
@@ -18,11 +19,11 @@ class Reconstruction:
     design of the subclasses.
     """
 
-    def __init__(self, model, core_reactions, config, simplified=False):
+    def __init__(self, model, dataMap, config, simplified=False):
         """
         Args:
             model: framed model, metabolic network model loaded with the framed package
-            core_reactions: set, set or list containing the core reactions that will be used for model reconstruction
+            dataMap: OmicsDataMap, containing the omics data after filtering and integration
             config: Configuration object, contains parameters necessary to the algorithm
             simplified: boolean, whether the model is consistent (all reactions are able to carry flux -> True)
                         or still needs to be checked for consistency (False). When set to True erroneously results will
@@ -32,8 +33,11 @@ class Reconstruction:
             self.model = model
         else:
             self.model = simplify(model, inplace=True)
-        self.core = self.get_ConsistentCore(core_reactions)
+        self.omics = dataMap.get_scores().keys()
+        if dataMap.mapType().lower() == "reactiondatamap":
+            self.core = self.get_ConsistentCore(self.omics)
         self.config = config
+        self.specific_model = None
         self._SVO = None
         self._VI = None
         self._scaledVI = None
@@ -61,7 +65,7 @@ class Reconstruction:
         toRemove = list(set(self.model.reactions.keys()) - reactionSet)
 
         tsModel.remove_reactions(toRemove)
-
+        self.specific_model = tsModel
         return tsModel
 
     def get_IrrevReactions(self, reactions=None):
@@ -84,6 +88,23 @@ class Reconstruction:
         :return: set, a filtered reaction set from the core that are able to carry flux
         """
         return set([reaction for reaction in core if reaction in self.model.reactions.keys()])
+
+    def toSBML(self, output_file):
+        """
+        Writes the generated model to an SBML file.
+
+        Args:
+            output_file: string, path to the file where the model should be written. A blank file with no file
+            extension shall be used.
+
+        Returns:
+            An sbml file
+        """
+        if self.specific_model is not None:
+            save_sbml_model(self.specific_model, output_file + '.xml')
+        else:
+            print('No tissue specific metabolic model has been built yet')
+            return
 
     def _createVI(self, scaled=False, scaling_factor=1):
         """

@@ -1,6 +1,6 @@
 """
  Created by Jorge Gomes on 02/05/2018
- MReconstruction
+ TsmRec
  fastcore
  
 """
@@ -44,17 +44,17 @@ Further documentation can be found:
 
 class Fastcore(Reconstruction):
 
-    def __init__(self, model, core_reactions, config, simplified=False, scaling_factor=10**5):
+    def __init__(self, model, dataMap, config, simplified=False, scaling_factor=10**5):
         """
         :param model: framed model object, metabolic model
-        :param core_reactions: set, core reactions used as input to the FASTCORE algorithm
+        :param dataMap: OmicsDataMap object.
         :param config: Configuration object, contains parameters necessary to the algorithm
         :param simplified: boolean, whether the model is consistent (all reactions are able to carry flux -> True)
                            or still needs to be checked for consistency (False). When set to True erroneously results
                            will not be trustworthy.
         :param scaling_factor: numeric, scaling factor to be considered during the algorithm
         """
-        Reconstruction.__init__(self, model, core_reactions, config, simplified)
+        Reconstruction.__init__(self, model, dataMap, config, simplified)
         self._scalingFactor = scaling_factor
         self._swap = False
 
@@ -317,7 +317,7 @@ class Fastcore(Reconstruction):
 
 
 if __name__ == '__main__':
-    example = 'C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/models/Ec_iAF1260_flux1.xml'
+    example = 'C:/Users/Tese_Avoid_Namespaces/Tese/TsmRec/models/Ec_iAF1260_flux1.xml'
     print('loading model')
     model1 = load_cbmodel(example)
     config1 = Configuration()

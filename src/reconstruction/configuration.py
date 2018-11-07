@@ -1,6 +1,6 @@
 """
  Created by Jorge Gomes on 21/05/2018
- MReconstruction
+ TsmRec
  configuration
  
 """
@@ -11,7 +11,7 @@ class Configuration:
     Configuration class to provide parameters for different metabolic model reconstruction algorithms
     """
 
-    def __init__(self, lb=-1000, ub=1000, flux_threshold=1*10**-4, solver='cplex', ):
+    def __init__(self, lb=-1000, ub=1000, flux_threshold=1*10**-4, solver='cplex'):
         """
         :param lb: numeric, lower bound
         :param ub: numeric, upper bound
