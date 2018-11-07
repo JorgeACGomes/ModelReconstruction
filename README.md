@@ -5,4 +5,7 @@ Under the glioma_testcase folder there is a Jupyter Notebook (**"TSM-Rec: The Ho
 
 All of the supplementary files including omics data and annotation files are also supplied.
 
+
+Installation guidelines in the **"TSM-Rec: The How to Guide"**
+
 *to be updated*
