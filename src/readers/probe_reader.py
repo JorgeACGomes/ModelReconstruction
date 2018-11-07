@@ -97,9 +97,9 @@ class ProbeReader:
 
 
 if __name__ == '__main__':
-    path = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/abc-tis-gpl570-formatted_v3.csv"
+    path = "C:/Users/Tese_Avoid_Namespaces/Tese/TsmRec/files/abc-tis-gpl570-formatted_v3.csv"
     tissue = 'brain'
-    convFile = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/rembrandt_study/HG-U133_Plus_2.na35.annot.csv"
+    convFile = "C:/Users/Tese_Avoid_Namespaces/Tese/TsmRec/files/rembrandt_study/HG-U133_Plus_2.na35.annot.csv"
     convS = ('Probe Set ID', 'Gene Symbol', ',')
     help(ProbeReader)
     gr = ProbeReader(path, 3, convFile, convTarget="Gene Symbol")

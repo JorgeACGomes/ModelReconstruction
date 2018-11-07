@@ -60,6 +60,6 @@ class GenericReader:
 
 
 if __name__ == "__main__":
-    path1 = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/abc-gpl571-formatted_v3.csv"
+    path1 = "C:/Users/Tese_Avoid_Namespaces/Tese/TsmRec/files/abc-gpl571-formatted_v3.csv"
     gr = GenericReader(path1,'probe_id', 22)
     gr.load()

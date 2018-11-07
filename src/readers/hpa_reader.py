@@ -78,7 +78,7 @@ def _handle_prog(prog):
 
 
 if __name__ == '__main__':
-    PATH = "C:/Users/Tese_Avoid_Namespaces/Tese/MReconstruction/files/pathology.tsv"
+    PATH = "C:/Users/Tese_Avoid_Namespaces/Tese/TsmRec/files/pathology.tsv"
     d2num = {'High': 20.0,
              'Medium': 15.0,
              'Low': 10.0,
