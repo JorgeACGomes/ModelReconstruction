@@ -8,4 +8,3 @@ All of the supplementary files including omics data and annotation files are als
 
 Installation guidelines in the **"TSM-Rec: The How to Guide"**
 
-*to be updated*
